@@ -1,16 +1,13 @@
-# =============================================================================
-# Sports Betting Arbitrage Scanner - .gitignore
-# =============================================================================
+# Environment and secrets
+.env
+.env.local
+.env.*.local
 
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# C extensions
 *.so
-
-# Distribution / packaging
 .Python
 build/
 develop-eggs/
@@ -28,97 +25,25 @@ wheels/
 .installed.cfg
 *.egg
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-
-# Translations
-*.mo
-*.pot
-
-# Environments
-.env
-.venv
-env/
+# Virtual environments
+.venv/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
-# IDE / Editor
+# IDE
 .idea/
 .vscode/
 *.swp
 *.swo
-*~
-.project
-.pydevproject
-.settings/
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Rope
-.ropeproject
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# pyenv
-.python-version
-
-# pipenv
-Pipfile.lock
-
-# poetry
-poetry.lock
-
-# pdm
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# Project-specific runtime artifacts
-# Keep data/ directory structure via data/.gitkeep, but ignore generated outputs
-data/arbs.json
-data/arb_history.jsonl
-data/*.json
-data/*.jsonl
-
-# Logs
-logs/
+# Runtime data
+data/
 *.log
+*.jsonl
 
 # Playwright
-playwright/.cache/
+.playwright/
 
-# OS generated
+# OS
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# Secrets / keys (defense in depth)
-*.pem
-*.key
-secrets/
-*.token
