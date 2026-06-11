@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import Field, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -86,6 +87,21 @@ class Settings(BaseSettings):
     def resolve_path(cls, v: str | Path) -> Path:
         p = Path(v)
         return p if p.is_absolute() else PROJECT_ROOT / p
+
+    @model_validator(mode="after")
+    def disable_playwright_on_railway(self) -> Settings:
+        """Browser scrapers need Chromium + long timeouts; skip on Railway by default."""
+        on_railway = bool(os.getenv("RAILWAY_ENVIRONMENT") or os.getenv("RAILWAY_PUBLIC_DOMAIN"))
+        if not on_railway:
+            return self
+        if os.getenv("ENABLE_PLAYWRIGHT_PLATFORMS", "").lower() in ("1", "true", "yes"):
+            return self
+        self.enable_stake = False
+        self.enable_bcgame = False
+        self.enable_shuffle = False
+        self.enable_tgcasino = False
+        self.enable_thunderpick = False
+        return self
 
     @property
     def sports_list(self) -> list[str]:

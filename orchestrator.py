@@ -124,10 +124,16 @@ class ArbOrchestrator:
 
     def _write_json_log(self, opportunities: list[ArbitrageOpportunity]) -> None:
         self.settings.json_log_path.parent.mkdir(parents=True, exist_ok=True)
+        events_by_platform: dict[str, int] = {}
+        for event in self._latest_events:
+            key = event.platform.value
+            events_by_platform[key] = events_by_platform.get(key, 0) + 1
+
         payload = {
             "scanned_at": datetime.now(timezone.utc).isoformat(),
             "platforms": self.settings.enabled_platforms,
             "event_count": len(self._latest_events),
+            "events_by_platform": events_by_platform,
             "opportunity_count": len(opportunities),
             "opportunities": [arb.to_dict() for arb in opportunities],
         }
